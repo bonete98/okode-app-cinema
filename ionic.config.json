@@ -1,0 +1,7 @@
+{
+  "name": "okode-cinema-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
