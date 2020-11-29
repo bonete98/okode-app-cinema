@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <h3>Escriba su búsqueda</h3>
+    <ion-searchbar type="text" debounce="500" (ionChange)="performFilter($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    
+    <ion-list>
+    <ion-item *ngFor="let film of filteredFilms">
+      <ion-label class="ion-text-wrap" >
+        <a [routerLink]="['/film', film.id]">{{ film.title }}</a> 
+      </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>
