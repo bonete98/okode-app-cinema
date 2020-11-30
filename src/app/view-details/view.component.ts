@@ -35,6 +35,7 @@ export class ViewComponent implements OnInit {
     this.filmservice.getFilmbyId(id).subscribe(data => {
       if (data) {
        this.filmi = data;
+       this.languages = this.filmi.spoken_languages;
        console.log(this.filmi);
        this.loading = false;
        console.log(this.loading);

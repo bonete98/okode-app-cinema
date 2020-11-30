@@ -8,7 +8,6 @@
   <body>
     <ion-card *ngIf="!loading">
       <ion-card-header style="padding-top: 100px;">
-        <ion-card-subtitle>Idioma original: {{ filmi.original_language }}</ion-card-subtitle>
         <ion-card-title>{{ filmi.title }}</ion-card-title>
       </ion-card-header>
       
@@ -18,6 +17,8 @@
         </span>
         <p></p>
         {{ filmi.overview }}
+        <h2> Idiomas: </h2>
+        <p *ngFor="let language of languages"> {{ language.english_name }}  </p>
       </ion-card-content>
     </ion-card>
 </body>

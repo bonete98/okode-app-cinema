@@ -4,6 +4,7 @@ import { Observable, throwError } from "rxjs";
 import { IResultSearch } from '../film/resultsearch';
 import { catchError } from 'rxjs/operators'
 import { IFilm, IFilmDetails } from '../film/film';
+import { environment } from 'src/environments/environment';
 
 /**
  *  el servicio será accedible a todos los componentes 
@@ -14,6 +15,8 @@ import { IFilm, IFilmDetails } from '../film/film';
 
 export class FilmService {
     private http: HttpClient;
+    private baseUrl = environment.baseUrl;
+    private apiKey: string = "90a26f5eee68aa446bcd8c92cbdc782e"; 
     constructor (private _http: HttpClient) {
         this.http = _http;
     }
@@ -22,7 +25,7 @@ export class FilmService {
      *  llamada a la API del servicio web de películas, accede a todas las películas que empiecen o contengan la a
      */
     getFilms(): Observable<IResultSearch>{
-        return this.http.get<IResultSearch>(`https://api.themoviedb.org/3/search/movie?api_key=90a26f5eee68aa446bcd8c92cbdc782e&query=a`).pipe(
+        return this.http.get<IResultSearch>(`${this.baseUrl}3/search/movie?api_key=${this.apiKey}&query=a`).pipe(
             catchError(this.handleError)
         ); 
     }
@@ -32,7 +35,7 @@ export class FilmService {
      * @param name será el nombre de la película a buscar a través de la llamada a la API, y el método devolverá las películas que empiecen por ese nombre o lo contengan
      */
     getFilmName(name): Observable<IResultSearch>{
-        return this.http.get<IResultSearch>(`https://api.themoviedb.org/3/search/movie?api_key=90a26f5eee68aa446bcd8c92cbdc782e&query=${name}`).pipe(
+        return this.http.get<IResultSearch>(`${this.baseUrl}search/movie?api_key=${this.apiKey}&query=${name}`).pipe(
             catchError(this.handleError)
         ); 
     }
@@ -42,7 +45,7 @@ export class FilmService {
      * @param id será el identificador de la película a buscar de la cuál se mostrarán sus detalles
      */
     getFilmbyId(id): Observable<IFilmDetails>{
-        return this.http.get<IFilmDetails>(`https://api.themoviedb.org/3/movie/${id}?api_key=90a26f5eee68aa446bcd8c92cbdc782e`).pipe(
+        return this.http.get<IFilmDetails>(`${this.baseUrl}movie/${id}?api_key=${this.apiKey}`).pipe(
             catchError(this.handleError)
         ); 
     }
