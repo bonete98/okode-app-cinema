@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilmService } from '../services/films.service';
-import { IFilm } from '../film/film';
+import { FilmResolved, IFilm } from '../film/film';
+
 
 
 @Component({
@@ -11,29 +12,45 @@ import { IFilm } from '../film/film';
   providers: [FilmService]
 })
 export class ViewDetailsPage implements OnInit {
-  public film: IFilm;
+  public filmi: IFilm;
+  public loading = true;
+  private sub: any;
+  private id: string = '';
   searchresults: any[];
-
+  errorMessage: string;
   constructor(
     private filmservice: FilmService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) { }
+  
+  
 
   ngOnInit() {
-    const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    console.log(id);
-    this.filmservice.getFilmbyId(id).subscribe(function(data) {
-      if (data) {
-         this.film = data.map(obj => {
-          let rObj = {}
-          rObj[obj.title] = obj.title;
-          rObj[obj.release_date] = obj.release_date;
-          rObj[obj.original_language] = obj.original_language;
-          return rObj
-       })
-       
-      }
-    })
+    //  this.sub = this.activatedRoute.params.subscribe( params => {
+    //    this.id = params['id'];
+    //    this.filmservice.getFilmbyId(this.id).subscribe(function(data) {
+    //     if (data) { 
+    //        this.film = data;
+    //        console.log(this.film);
+    //     }
+    //   })
+    //  })
+    // const resolvedData: FilmResolved =
+    //   this.activatedRoute.snapshot.data['resolvedData'];
+    // this.errorMessage = resolvedData.error;
+    // this.onFilm(resolvedData.film);
+
+     const id = +this.activatedRoute.snapshot.paramMap.get('id');
+     console.log(id);
+     
+     this.filmservice.getFilmbyId(id).subscribe(function(data) {
+       if (data) {
+          this.filmi = data;
+          console.log(this.filmi);
+          this.loading = false;
+          console.log(this.loading);
+       }
+     })
   }
 
   getBackButtonText() {

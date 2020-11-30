@@ -7,10 +7,6 @@ const routes: Routes = [
     path: '',
     component: HomePage,
   },
-  {
-    path: 'film/id',
-    loadChildren: () => import('../view-details/view-details.module').then( m => m.ViewDetailsPageModule)
-  },
 ];
 
 @NgModule({

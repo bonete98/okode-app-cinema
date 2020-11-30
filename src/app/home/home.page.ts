@@ -10,59 +10,40 @@ import { FilmService } from '../services/films.service';
 })
 export class HomePage {
 
-  
+  /**
+   * La variable searchresults registrará el resultado de la búsqueda si ha sido existosa o no, filmService será un variable que utilice el servicio creado para
+   * acceder a la API, filteredfilms serán las películas filtradas   
+   */
   searchresults: IResultSearch;
   private filmService;
   constructor(_filmService: FilmService) { this.filmService = _filmService;}
-
-  _listFilter: string = '';
   filteredFilms: IFilm[] = [];
 
-  get listFilter(): string {
-    return this._listFilter;
-  }
-  
-  set listFilter(v : string) {
-    this._listFilter = v;
-    this.performFilter(this.listFilter);
-  }
-  
+  /**
+   * 
+   * @param ev será el evento identificado, que indica que se ha modificado la barra de búsqueda, en el método se se filtrarán los nombres a partir de la llamada a la API
+   */
   performFilter(ev: any){
     let filter = ev.target.value;
     filter = filter.toLocaleLowerCase();
     filter = filter.replace(/\s+/g, '+');
-
-    this.filmService.getFilmName(filter).subscribe({
-       next: results => {
-         if (results) {
-          this.searchresults = results;
-          if (this.searchresults.total_results != 0) {
-            this.filteredFilms = this.searchresults.results;
-         } else {
-           this.filteredFilms = [];
-         }
-         }
-           
-       }  
-     })
+    if (filter != ''){
+      this.filmService.getFilmName(filter).subscribe({
+        next: results => {
+          if (results) {
+           this.searchresults = results;
+           if (this.searchresults.total_results != 0) {
+             this.filteredFilms = this.searchresults.results;
+          } else {
+            this.filteredFilms = [];
+          }
+          } 
+        }  
+      })
+    }
+    
   }
   ngOnInit() {
-  //  this.filteredFilms = [{
-  //     original_title: "El padrino",
-  //     poster_path: "/eveev",
-  //     video: false,
-  //     vote_average: 40,
-  //     vote_count: 30,
-  //     release_date: new Date(2017, 4, 4),
-  //     title: "El padrino",
-  //     popularity: 60,
-  //     adult: false,
-  //     id: 30,
-  //     overview: "muy yyy",
-  //     genre_ids: [2, 3],
-  //     backdrop_path: "hola",
-  //     original_language: "english",
-  // }]
       this.filmService.getFilms().subscribe(data => {
         if (data) {
           console.log(data);

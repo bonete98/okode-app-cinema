@@ -5,25 +5,21 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
-<ion-content [fullscreen]="true" *ngIf="film">
-  <ion-item>
-    <ion-icon name="person-circle" color="primary"></ion-icon>
-    <ion-label class="ion-text-wrap">
-      <h2>
-        {{ film.title }}
-        <span class="date">
-          <ion-note>{{ film.release_date }}</ion-note>
-        </span>
-      </h2>
-      <h3>To: <ion-note>Me</ion-note></h3>
-    </ion-label>
-  </ion-item>
-  
-  <div class="ion-padding">
-    <h1>{{ film.original_language }}</h1>
-    <p>
-      
-    </p>
-  </div>
-</ion-content>
+<div *ngIf="loading" >Is loading</div>
+<div *ngIf="filmi">
+      <ion-label class="ion-text-wrap">
+        <h1>
+          {{ filmi.title }}
+          <span class="date">
+            <ion-note>{{ filmi.release_date }}</ion-note>
+          </span>
+        </h1>
+      </ion-label>
+    
+    <div class="ion-padding">
+      <h2>{{ filmi.original_language }}</h2>
+      <h2> {{ filmi.overview }}</h2>
+      <p>
+      </p>
+    </div>
+</div>
