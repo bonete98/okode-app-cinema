@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { IResultSearch } from '../film/resultsearch';
 import { catchError } from 'rxjs/operators'
+import { IFilm, IFilmDetails } from '../film/film';
 
 /**
  *  el servicio será accedible a todos los componentes 
@@ -40,8 +41,8 @@ export class FilmService {
      * 
      * @param id será el identificador de la película a buscar de la cuál se mostrarán sus detalles
      */
-    getFilmbyId(id): Observable<any>{
-        return this.http.get<any>(`https://api.themoviedb.org/3/movie/${id}?api_key=90a26f5eee68aa446bcd8c92cbdc782e`).pipe(
+    getFilmbyId(id): Observable<IFilmDetails>{
+        return this.http.get<IFilmDetails>(`https://api.themoviedb.org/3/movie/${id}?api_key=90a26f5eee68aa446bcd8c92cbdc782e`).pipe(
             catchError(this.handleError)
         ); 
     }
